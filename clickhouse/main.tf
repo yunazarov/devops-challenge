@@ -21,5 +21,12 @@ resource "docker_container" "this" {
     container_path = "/var/lib/clickhouse"
   }
 
+  terraform {
+    backend "local" {
+      path = "/opt/terraform-states/clickhouse.tfstate"
+    }
+  }
+
+
   restart = "unless-stopped"
 }

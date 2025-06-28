@@ -18,5 +18,11 @@ resource "docker_container" "this" {
     container_path = "/data"
   }
 
+  terraform {
+    backend "local" {
+      path = "/opt/terraform-states/postg.tfstate"
+    }
+  }
+  
   restart = "unless-stopped"
 }
