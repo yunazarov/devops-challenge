@@ -17,3 +17,9 @@ variable "native_port" {
   type    = number
   default = 9000
 }
+
+# на хосте с проектом нужном создать директорию и дать права пользователя раннера
+variable "data_dir" {
+  type    = string
+  default = "/opt/devops-challenge/clickhouse/data"
+}

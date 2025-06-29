@@ -4,7 +4,7 @@ resource "docker_image" "this" {
 
 resource "docker_container" "this" {
   name  = var.container_name
-  image = docker_image.this.latest
+  image = docker_image.this.name
 
   env = [
     "POSTGRES_DB=${var.db}",
@@ -17,15 +17,18 @@ resource "docker_container" "this" {
     external = var.port
   }
 
-  volumes {
-    host_path      = "${path.module}/data"
-    container_path = "/var/lib/postgresql/data"
+  networks_advanced {
+    name = "app"
   }
 
-  terraform {
-    backend "local" {
-      path = "/opt/terraform-states/postg.tfstate"
-    }
+  volumes {
+    host_path      = abspath("${path.module}/init.sql")
+    container_path = "/docker-entrypoint-initdb.d/init.sql"
+  }
+
+  volumes {
+    host_path      = var.data_dir
+    container_path = "/var/lib/postgresql/data"
   }
 
   restart = "unless-stopped"

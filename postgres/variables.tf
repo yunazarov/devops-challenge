@@ -27,3 +27,8 @@ variable "password" {
   type    = string
   default = "postgres"
 }
+
+variable "data_dir" {
+  type    = string
+  default = "/opt/devops-challenge/postgres/data"
+}

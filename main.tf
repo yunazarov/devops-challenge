@@ -9,3 +9,7 @@ module "postgres" {
 module "redis" {
   source = "./redis"
 }
+
+module "scripts" {
+  source = "./scripts"
+}

@@ -12,3 +12,8 @@ variable "port" {
   type    = number
   default = 6379
 }
+
+variable "data_dir" {
+  type    = string
+  default = "/opt/devops-challenge/redis/data"
+}

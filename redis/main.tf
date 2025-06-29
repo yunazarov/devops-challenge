@@ -4,7 +4,7 @@ resource "docker_image" "this" {
 
 resource "docker_container" "this" {
   name  = var.container_name
-  image = docker_image.this.latest
+  image = docker_image.this.name
 
   command = ["redis-server", "--appendonly", "yes"]
 
@@ -13,16 +13,14 @@ resource "docker_container" "this" {
     external = var.port
   }
 
+  networks_advanced {
+    name = "app"
+  }
+
   volumes {
-    host_path      = "${path.module}/data"
+    host_path      = var.data_dir
     container_path = "/data"
   }
 
-  terraform {
-    backend "local" {
-      path = "/opt/terraform-states/postg.tfstate"
-    }
-  }
-  
   restart = "unless-stopped"
 }
